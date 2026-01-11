@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo-auth:27017/authdb
+    depends_on:
+      - mongo-auth
+
+  product-service:
+    build: ./product-service
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGO_URI=mongodb://mongo-product:27017/productdb
+    depends_on:
+      - mongo-product
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  mongo-auth:
+    image: mongo:latest
+  mongo-product:
+    image: mongo:latest
