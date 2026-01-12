@@ -1,8 +1,8 @@
 # Stage 1: Build
 FROM node:20-alpine AS js.app
 WORKDIR /app
-COPY package*.json ./
-RUN npm install --only=production
+COPY ./package*.json ./
+RUN npm install
 
 # Stage 2: Production
 FROM node:20-alpine
